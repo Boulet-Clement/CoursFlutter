@@ -25,7 +25,7 @@ class TodoList extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
           fontFamily: 'Comforter'),
-      home: const AllTasks(title: 'Todo Pist Home Page'),
+      home: const AllTasks(title: 'Todo List Home Page'),
     );
   }
 }
