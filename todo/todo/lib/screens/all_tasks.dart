@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:todo/data/tasks.dart' as data;
 import 'package:todo/components/tasks/task_master.dart';
+import 'package:todo/components/tasks/task_details.dart';
+
+import '../models/task.dart';
 
 class AllTasks extends StatefulWidget {
   const AllTasks({Key? key, required this.title}) : super(key: key);
@@ -12,6 +15,20 @@ class AllTasks extends StatefulWidget {
 }
 
 class _AllTasksState extends State<AllTasks> {
+  Task? selectedTask;
+
+  void showDetails(Task task) {
+    setState(() {
+      selectedTask = task;
+    });
+  }
+
+  void hideDetails() {
+    setState(() {
+      selectedTask = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,8 +39,12 @@ class _AllTasksState extends State<AllTasks> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              selectedTask != null
+                  ? TaskDetails(task: selectedTask, hideDetails: hideDetails)
+                  : Container(),
               TaskMaster(
                 tasks: data.tasks,
+                showDetails: showDetails,
               ),
             ],
           ),

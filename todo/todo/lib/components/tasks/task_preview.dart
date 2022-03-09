@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:todo/models/task.dart';
 
-class TaskPreview extends StatefulWidget {
-  const TaskPreview({Key? key, required this.task}) : super(key: key);
+class TaskPreview extends StatelessWidget {
+  const TaskPreview(
+      {Key? key, required this.task, required this.onTaskSelected})
+      : super(key: key);
 
-  final Task task;
+  final Task? task;
+  final Function onTaskSelected;
 
-  @override
-  State<TaskPreview> createState() => _TaskPreviewState();
-}
-
-class _TaskPreviewState extends State<TaskPreview> {
   @override
   Widget build(BuildContext context) {
+    Widget getIconAccordingToCompleted() {
+      return (task!.completed)
+          ? const Icon(Icons.check)
+          : const Icon(Icons.timelapse);
+    }
+
     return ListTile(
-      title: Text(widget.task.content),
-      trailing: Checkbox(
-        value: widget.task.completed,
-        onChanged: (value) {
-          setState(() {
-            widget.task.completed = value!;
-          });
-        },
-      ),
+      tileColor: task!.completed ? Colors.grey[300] : Colors.white,
+      title: Text(task!.content),
+      onTap: () => onTaskSelected(task),
+      trailing: getIconAccordingToCompleted(),
     );
   }
 }
